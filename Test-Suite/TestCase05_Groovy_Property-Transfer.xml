@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="07c5c291-c75f-4160-a7c9-74dbdedc0170" discardOkResults="false" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="TestCase05_Groovy_Property Transfer" searchProperties="true" timeout="0" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="07c5c291-c75f-4160-a7c9-74dbdedc0170fileName">TestCase05_Groovy_Property-Transfer</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="restrequest" name="GetListofUsers" id="d33fb52a-7786-49be-9919-f71c16f358d7">
+    <con:settings/>
+    <con:config service="https://reqres.in 1" resourcePath="/api/users" methodName="Users" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetListofUsers" id="8d0c23e8-9a34-4df2-95c8-69b4a03cf04c" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>https://reqres.in</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://reqres.in/api/users</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="ebeb4815-de94-49aa-97f6-d879041bc5ec" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="page" value="2"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>page</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="5429a377-2bc3-42ab-97d9-e55f90b0f7d2">
+            <con:authProfile>No Authorization</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script" id="7f303a81-608f-47c3-a4f9-15e34b6eac3c">
+    <con:settings/>
+    <con:config>
+      <script>// Get properties from response 
+def resp = testRunner.testCase.getTestStepByName('GetListofUsers').getPropertyValue('response')
+
+// Use JsonSlurper to parse Json response 
+def jsonSlurper = new groovy.json.JsonSlurper()
+def object = jsonSlurper.parseText(resp)
+
+//  Get Property :  Json path from where value needs to be extracted 
+def value = object.data[5].first_name
+
+// Set Property :  Set extracted property value 
+testRunner.testCase.getTestStepByName('MyProperties').setPropertyValue('user',value)</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="properties" name="MyProperties" id="0b02258a-7177-46a1-a567-b745bc45528c">
+    <con:settings/>
+    <con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:properties>
+        <con:property>
+          <con:name>name</con:name>
+          <con:value/>
+        </con:property>
+        <con:property>
+          <con:name>user</con:name>
+          <con:value>Rachel</con:value>
+        </con:property>
+      </con:properties>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Update User details" id="8d7ede31-0af8-4ead-a14d-bbf77c6ff53f">
+    <con:settings/>
+    <con:config service="https://reqres.in" resourcePath="/api/users/2" methodName="" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Update User details" id="58817d1a-36a8-4406-8f41-7ed237e17038" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>https://reqres.in</con:endpoint>
+        <con:request>{"name":"${MyProperties#user}","job":"zion resident"}</con:request>
+        <con:originalUri>https://reqres.in/api/users/2</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="e2e735f2-7f06-4978-94ba-d463d9e319ed" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="5429a377-2bc3-42ab-97d9-e55f90b0f7d2">
+            <con:authProfile>No Authorization</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>d33fb52a-7786-49be-9919-f71c16f358d7</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>8d7ede31-0af8-4ead-a14d-bbf77c6ff53f</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>7f303a81-608f-47c3-a4f9-15e34b6eac3c</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

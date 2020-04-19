@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="52d57d0d-06e8-4d55-ad93-503a17da2e43" discardOkResults="false" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="TestCase03_ResponseData Transfer to another Request" searchProperties="true" timeout="0" xmlns:con="http://eviware.com/soapui/config">
+  <con:description>1. Get Capital City for given City ISO code via Property feature</con:description>
+  <con:settings>
+    <con:setting id="52d57d0d-06e8-4d55-ad93-503a17da2e43fileName">TestCase03_ResponseData-Transfer-to-another-Request</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="request" id="305a5fbd-19a8-4cad-a619-dc7ea5ad5ce5" name="Get ISO Code for given country">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>CountryInfoServiceSoapBinding</con:interface>
+      <con:operation>CountryISOCode</con:operation>
+      <con:request name="Get ISO Code for given country" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="f9396fa0-fd29-4291-ada2-b8042f15e42c">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.oorsprong.org/websamples.countryinfo">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:CountryISOCode>
+         <web:sCountryName>${#TestCase#sCountryISOCode}</web:sCountryName>
+      </web:CountryISOCode>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="XPath Match" id="41f79f89-6031-45d0-8da9-9a72c03bf194" name="Match content of [m:CountryISOCodeResult]">
+          <con:configuration>
+            <path>declare namespace m='http://www.oorsprong.org/websamples.countryinfo';
+//m:CountryISOCodeResponse[1]/m:CountryISOCodeResult[1]/text()</path>
+            <content>IN</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.oorsprong.org/websamples.countryinfo/CountryInfoServiceSoapType/CountryISOCodeRequest"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5429a377-2bc3-42ab-97d9-e55f90b0f7d2">
+            <con:authProfile>No Authorization</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer" id="e10a0194-dfb3-4825-b633-a066807960d5">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>CountryCode</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Get ISO Code for given country</con:sourceStep>
+        <con:sourcePath>declare namespace m='http://www.oorsprong.org/websamples.countryinfo';
+//m:CountryISOCodeResponse[1]/m:CountryISOCodeResult[1]</con:sourcePath>
+        <con:targetType>Request</con:targetType>
+        <con:targetStep>Get Capital City from ISO code</con:targetStep>
+        <con:targetPath>declare namespace web='http://www.oorsprong.org/websamples.countryinfo';
+//web:CapitalCity[1]/web:sCountryISOCode[1]</con:targetPath>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" id="0a06e858-83fc-4ba2-a27a-44810ed1d71c" name="Get Capital City from ISO code">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>CountryInfoServiceSoapBinding</con:interface>
+      <con:operation>CapitalCity</con:operation>
+      <con:request name="Get Capital City from ISO code" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="996bd00d-6beb-4b8f-9cd9-656adabef710">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.oorsprong.org/websamples.countryinfo">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:CapitalCity>
+         <web:sCountryISOCode>IN</web:sCountryISOCode>
+      </web:CapitalCity>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="XPath Match" id="5c38c767-ebf0-46cb-98ba-ac3111e9f36b" name="Match content of [m:CapitalCityResult]">
+          <con:configuration>
+            <path>declare namespace m='http://www.oorsprong.org/websamples.countryinfo';
+//m:CapitalCityResponse[1]/m:CapitalCityResult[1]/text()</path>
+            <content>New Delhi</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.oorsprong.org/websamples.countryinfo/CountryInfoServiceSoapType/CapitalCityRequest"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5429a377-2bc3-42ab-97d9-e55f90b0f7d2">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>sCountryISOCode</con:name>
+      <con:value>India</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>2eab8d05-fca5-4471-bbd8-1fd18f870fe5</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>0a06e858-83fc-4ba2-a27a-44810ed1d71c</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>305a5fbd-19a8-4cad-a619-dc7ea5ad5ce5</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>e10a0194-dfb3-4825-b633-a066807960d5</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

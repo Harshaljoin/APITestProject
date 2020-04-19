@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="16dd5c10-d2d5-405c-86e7-3e45ddfc09e7" discardOkResults="false" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="TestCase01_PropertyTest" searchProperties="true" timeout="0" xmlns:con="http://eviware.com/soapui/config">
+  <con:description>1. Get Capital City for given City ISO code via Property feature</con:description>
+  <con:settings>
+    <con:setting id="16dd5c10-d2d5-405c-86e7-3e45ddfc09e7fileName">TestCase01_PropertyTest</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="request" id="2eab8d05-fca5-4471-bbd8-1fd18f870fe5" name="CapitalCity">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>CountryInfoServiceSoapBinding</con:interface>
+      <con:operation>CapitalCity</con:operation>
+      <con:request name="CapitalCity" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="996bd00d-6beb-4b8f-9cd9-656adabef710">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.oorsprong.org/websamples.countryinfo">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:CapitalCity>
+         <web:sCountryISOCode>${#TestCase#sCountryISOCode}</web:sCountryISOCode>
+      </web:CapitalCity>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="Simple Contains" id="825e016a-1248-4eb2-8443-fccce7c86611" name="Contains">
+          <con:configuration>
+            <token>Washington</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="MessageContentAssertion" id="411316f6-d236-45ef-a87c-f3be4c67c974" name="Message Content Assertion">
+          <con:configuration xsi:type="con:MessageContentAssertion">
+            <con:elements>
+              <con:xpath>declare namespace ns1='http://www.oorsprong.org/websamples.countryinfo';
+//ns1:CapitalCityResponse[1]/ns1:CapitalCityResult[1]</con:xpath>
+              <con:element>m:CapitalCityResult</con:element>
+              <con:type>XmlString</con:type>
+              <con:operator>=</con:operator>
+              <con:enabled>true</con:enabled>
+              <con:expectedValue>Washington</con:expectedValue>
+              <con:hasValue>false</con:hasValue>
+              <con:numberType>false</con:numberType>
+            </con:elements>
+            <con:originalMessage><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <m:CapitalCityResponse xmlns:m="http://www.oorsprong.org/websamples.countryinfo">
+         <m:CapitalCityResult>Washington</m:CapitalCityResult>
+      </m:CapitalCityResponse>
+   </soap:Body>
+</soap:Envelope>]]></con:originalMessage>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="MessageContentAssertion" id="d588612d-25c4-4c17-8d29-d9c3970d53b6" name="Message Content Assertion 2">
+          <con:configuration xsi:type="con:MessageContentAssertion">
+            <con:elements>
+              <con:xpath>declare namespace ns1='http://www.oorsprong.org/websamples.countryinfo';
+//ns1:CapitalCityResponse[1]/ns1:CapitalCityResult[1]</con:xpath>
+              <con:element>m:CapitalCityResult</con:element>
+              <con:type>XmlString</con:type>
+              <con:operator>=</con:operator>
+              <con:enabled>true</con:enabled>
+              <con:expectedValue>Washington</con:expectedValue>
+              <con:hasValue>false</con:hasValue>
+              <con:numberType>false</con:numberType>
+            </con:elements>
+            <con:originalMessage><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <m:CapitalCityResponse xmlns:m="http://www.oorsprong.org/websamples.countryinfo">
+         <m:CapitalCityResult>Washington</m:CapitalCityResult>
+      </m:CapitalCityResponse>
+   </soap:Body>
+</soap:Envelope>]]></con:originalMessage>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.oorsprong.org/websamples.countryinfo/CountryInfoServiceSoapType/CapitalCityRequest"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5429a377-2bc3-42ab-97d9-e55f90b0f7d2">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>sCountryISOCode</con:name>
+      <con:value>USA</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>2eab8d05-fca5-4471-bbd8-1fd18f870fe5</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

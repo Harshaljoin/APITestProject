@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="Users" path="/api/users" id="75041faf-b27a-438d-afb7-1c2bc48f5288" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="75041faf-b27a-438d-afb7-1c2bc48f5288fileName">Users</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:method name="Users" id="81291c1d-f7aa-4d4d-ba74-1384f1edee1a" method="GET">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter required="true">
+        <con:name>page</con:name>
+        <con:value>2</con:value>
+        <con:style>QUERY</con:style>
+        <con:default>2</con:default>
+        <con:path xsi:nil="true"/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json; charset=utf-8</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xmlns:user="https://reqres.in/api/users">user:Response</con:element>
+    </con:representation>
+    <con:request name="Request 1" id="8d0c23e8-9a34-4df2-95c8-69b4a03cf04c" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>https://reqres.in</con:endpoint>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters>
+        <con:entry key="page" value="2"/>
+      </con:parameters>
+      <con:parameterOrder>
+        <con:entry>page</con:entry>
+      </con:parameterOrder>
+      <con:environmentSpec>
+        <con:entry environmentId="5429a377-2bc3-42ab-97d9-e55f90b0f7d2">
+          <con:authProfile>No Authorization</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>
